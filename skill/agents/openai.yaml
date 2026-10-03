@@ -1,0 +1,7 @@
+interface:
+  display_name: "Used Disk Init"
+  short_description: "二手/拆机硬盘的检查、反清零鉴别、坏道验证与初始化"
+  default_prompt: "使用 $used-disk-init 来路由和执行此二手盘检查、清零盘鉴别、残留数据盘点、坏道验证或初始化任务。"
+
+policy:
+  allow_implicit_invocation: true
