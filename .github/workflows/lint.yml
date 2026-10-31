@@ -1,0 +1,37 @@
+name: lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shellcheck:
+    name: shellcheck (*.sh)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run shellcheck on all *.sh
+        run: |
+          mapfile -t scripts < <(find . -type f -name '*.sh' -not -path './.git/*' | sort)
+          if [ "${#scripts[@]}" -eq 0 ]; then
+            echo "No *.sh files in the repo; nothing to check."
+            exit 0
+          fi
+          echo "Checking: ${scripts[*]}"
+          # 放宽规则：只报 error/warning 级，跳过 info/style
+          shellcheck --severity=warning "${scripts[@]}"
+
+  markdownlint:
+    name: markdownlint-cli2 (*.md)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run markdownlint-cli2 on all *.md
+        # 规则在仓库根 .markdownlint-cli2.jsonc 中配置（default:false，只开明显错误）
+        run: npx --yes markdownlint-cli2 "**/*.md"

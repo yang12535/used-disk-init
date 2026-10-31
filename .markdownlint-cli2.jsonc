@@ -1,0 +1,14 @@
+{
+  // 放宽的 markdownlint 配置：关闭全部默认规则，只保留"明显错误"类规则
+  "config": {
+    "default": false,
+    "MD001": true, // heading-increment：标题层级跳级
+    "MD012": true, // no-multiple-blanks：连续多个空行
+    "MD025": true, // single-h1：一个文件出现多个一级标题
+    "MD047": true  // single-trailing-newline：文件末尾没有换行
+  },
+  "ignores": [
+    "node_modules/**",
+    ".git/**"
+  ]
+}
